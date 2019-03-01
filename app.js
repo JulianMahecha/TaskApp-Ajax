@@ -62,13 +62,16 @@ $(document).ready(function () {
     }
 
     /* Detectando Boton Eliminar */
-    $(document).on('click', '.task-delete', function(){
-        let element = $(this)[0].parentElement.parentElement;
-        let id = $(element).attr('task-id')
-        
-        $.post('task-delete.php', {id}, function (response) {
-            fetchTasks();
-        });
+    $(document).on('click', '.task-delete', function () {
+        if (confirm('Are you sure you want to delete it?')) {
+            let element = $(this)[0].parentElement.parentElement;
+            let id = $(element).attr('task-id')
+
+            $.post('task-delete.php', { id }, function (response) {
+                console.log(response);
+                fetchTasks();
+            });
+        }
     })
 
 });

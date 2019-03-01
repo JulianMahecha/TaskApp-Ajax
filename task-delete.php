@@ -12,6 +12,6 @@ if (isset($_POST['id'])) {
         die('Query Error');
     }
 
-    echo 'Task Added';
+    echo 'Task Deleted';
 
 }
