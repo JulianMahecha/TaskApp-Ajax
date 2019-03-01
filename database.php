@@ -5,9 +5,4 @@
         '',
         'task_app'
     );
-
-    if ($connection) {
-        echo "ok";
-    }
-
 ?>
