@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#task-result').hide();
-
+    fetchTasks();
 
     /* Guardando lo que esta en el formulario*/
     $('#search').keyup(function (e) {
@@ -32,10 +32,37 @@ $(document).ready(function () {
             name: $('#name').val(),
             description: $('#description').val()
         }
-        $.post('task-add.php', postData, function(response){
-            console.log(response);
+        $.post('task-add.php', postData, function (response) {
+            $('#task-form').trigger('reset');
+            fetchTasks();
         });
         e.preventDefault();
+        
 
     });
+
+    /* Mostrando datos en la Tabla */
+    function fetchTasks() {
+        $.ajax({
+
+            url: 'task-list.php',
+            type: 'GET',
+            success: function (response) {
+                let tasks = JSON.parse(response);
+                let template = '';
+                tasks.forEach(tasks => {
+                    template +=
+                        `<tr>
+                            <td>${tasks.id}</td>
+                            <td>${tasks.name}</td>
+                            <td>${tasks.description}</td>
+                        </tr>`
+                });
+
+                $('#tasks').html(template);
+            }
+        });
+    }
+
+
 });
