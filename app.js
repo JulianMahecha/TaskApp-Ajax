@@ -18,7 +18,6 @@ $(document).ready(function () {
                     tasks.forEach(tasks => {
                         template += `<li>${tasks.name}</li>`
                     });
-
                     $('#container').html(template);
                     $('#task-result').show();
                 }
@@ -37,8 +36,6 @@ $(document).ready(function () {
             fetchTasks();
         });
         e.preventDefault();
-        
-
     });
 
     /* Mostrando datos en la Tabla */
@@ -52,17 +49,26 @@ $(document).ready(function () {
                 let template = '';
                 tasks.forEach(tasks => {
                     template +=
-                        `<tr>
+                        `<tr task-id= "${tasks.id}">
                             <td>${tasks.id}</td>
                             <td>${tasks.name}</td>
                             <td>${tasks.description}</td>
+                            <td><button class="task-delete btn btn-danger">Delete</button></td>
                         </tr>`
                 });
-
                 $('#tasks').html(template);
             }
         });
     }
 
+    /* Detectando Boton Eliminar */
+    $(document).on('click', '.task-delete', function(){
+        let element = $(this)[0].parentElement.parentElement;
+        let id = $(element).attr('task-id')
+        
+        $.post('task-delete.php', {id}, function (response) {
+            fetchTasks();
+        });
+    })
 
 });
